@@ -35,32 +35,34 @@ function refreshView(){
     return
 }
 function addUser(){
+  var row = $(this).closest('tr');
   var user = $(this).parent().prev().prev().text();
   $.ajax({
-       url: 'startFollowing.php', 
-       type: 'GET',
-       data: "username=" + user + "&followerName=" + username,
-       success: function(result){
-            $('#follow').html(result);
-       }
+      url: 'startFollowing.php', 
+      type: 'GET',
+      data: "username=" + user,
+      success: function(result){
+        row.remove();
+        $('#follow').append(user + "<br>");
+      }
     })
 }
 $(document).ready(function(){
     $.ajax({
-       url: 'updateFollowers.php', 
-       type: 'GET',
-       data: "username=Travis",
-       success: function(result){
-            $('#followers').html(result);
-       }
+      url: 'updateFollowers.php', 
+      type: 'GET',
+      data: "username=Travis",
+      success: function(result){
+        $('#followers').html(result);
+      }
     });
     $.ajax({
-       url: 'updateFollowing.php', 
-       type: 'GET',
-       data: "username=Travis",
-       success: function(result){
-            $('#follow').html(result);
-       }
+        url: 'updateFollowing.php', 
+        type: 'GET',
+        data: "username=Travis",
+        success: function(result){
+          $('#follow').html(result);
+        }
     })
 });
 $('#btnFollow').click(function(){
