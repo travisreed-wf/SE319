@@ -8,8 +8,10 @@
 </div>
 <h2>Messages</h2>
 <div id="messages"></div><br>
-<h2>Follow</h2>
+<h2>Currently Following</h2>
 <div id="follow"></div><br>
+<input type="button" id="btnFollow" value="Follow Someone New">
+<div id="userTable"></div>
 <h2>Followers</h2>
 <div id="followers"></div><br>
 <h2>Post</h2>
@@ -40,4 +42,20 @@ $(document).ready(function(){
        }
     })
 });
+$('#btnFollow').click(function(){
+  var table = "<table border=1>";
+  table += "<th>Username</th><th>Follower Count</th><th>Add</th>";
+  $.ajax({
+    url: 'allUsers.php', 
+      type: 'GET',
+      data: "username=Travis",
+      success: function(result){
+        console.log(result);
+        table += result;
+        table += "</table>";
+        $('#userTable').html(table);
+      }
+  })
+
+})
 </script>
