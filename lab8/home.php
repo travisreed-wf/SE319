@@ -34,6 +34,17 @@ echo "<div id='head'><p align='right' id='user'>" . $username ."</p></div>";
 function refreshView(){
     return
 }
+function addUser(){
+  var user = $(this).parent().prev().prev().text();
+  $.ajax({
+       url: 'startFollowing.php', 
+       type: 'GET',
+       data: "username=" + user + "&followerName=" + username,
+       success: function(result){
+            $('#follow').html(result);
+       }
+    })
+}
 $(document).ready(function(){
     $.ajax({
        url: 'updateFollowers.php', 
@@ -60,10 +71,10 @@ $('#btnFollow').click(function(){
       type: 'GET',
       data: "username=Travis",
       success: function(result){
-        console.log(result);
         table += result;
         table += "</table>";
         $('#userTable').html(table);
+        $('.startFollowing').click(addUser);
       }
   });
 
