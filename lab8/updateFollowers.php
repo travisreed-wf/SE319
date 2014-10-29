@@ -5,22 +5,17 @@
     if (mysqli_connect_errno()) {
       echo "Failed to connect to MySQL: " . mysqli_connect_error();
     }
-
-    if (isset($_GET['username'])){
-        $username = $_GET['username'];
-        $query = "SELECT Followername FROM followers where username = '$username';";
-        $result = mysqli_query($GLOBALS['con'], $query);
-        $followers = array();
-        while($row = mysqli_fetch_array($result)) {
-            $followers[] = $row[0];
-            echo $row[0];
-            echo "<br>";
-        }
+    session_start();
+    $username = $_SESSION['username'];
+    $query = "SELECT Followername FROM followers where username = '$username';";
+    $result = mysqli_query($GLOBALS['con'], $query);
+    $followers = array();
+    while($row = mysqli_fetch_array($result)) {
+        $followers[] = $row[0];
+        echo $row[0];
+        echo "<br>";
+    }
         
-    }
-    else {
-        echo "Missing data";
-    }
 
 
 

@@ -51,7 +51,7 @@ $(document).ready(function(){
     $.ajax({
       url: 'updateFollowers.php', 
       type: 'GET',
-      data: "username=Travis",
+      data: "",
       success: function(result){
         $('#followers').html(result);
       }
@@ -59,7 +59,7 @@ $(document).ready(function(){
     $.ajax({
         url: 'updateFollowing.php', 
         type: 'GET',
-        data: "username=Travis",
+        data: "",
         success: function(result){
           $('#follow').html(result);
         }
@@ -71,7 +71,7 @@ $('#btnFollow').click(function(){
   $.ajax({
     url: 'allUsers.php', 
       type: 'GET',
-      data: "username=Travis",
+      data: "",
       success: function(result){
         table += result;
         table += "</table>";

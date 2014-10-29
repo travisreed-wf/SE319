@@ -6,15 +6,11 @@
       echo "Failed to connect to MySQL: " . mysqli_connect_error();
     }
 
-    if (isset($_GET['username'])){
-        $username = $_GET['username'];
-        $followerName = $_SESSION['username'];
-        $query = "INSERT INTO followers (username, followername) VALUES ('$username', '$followerName');";
-        $result = mysqli_query($GLOBALS['con'], $query);
-    }
-    else {
-        echo "Missing data";
-    }
+    
+    $username = $_SESSION['username'];
+    $followerName = $_SESSION['username'];
+    $query = "INSERT INTO followers (username, followername) VALUES ('$username', '$followerName');";
+    $result = mysqli_query($GLOBALS['con'], $query);
 
 
 
