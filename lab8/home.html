@@ -9,7 +9,11 @@
 <div id="messages">Messages</div>
 <div id="follow">Follow</div>
 <div id="followers">Followers</div>
-<div id="post">Post</div>
+<div id="post">
+  <br>
+  <textarea placeholder="Post Your Message Here" maxlength="140" id="postMessage" rows="3" cols="50"></textarea>  
+  <button id="postButton">Post </button>
+</div>
 </body>
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
@@ -30,4 +34,23 @@ $(document).ready(function(){
        }
     });
 });
+
+
+$("#postButton").click(function(){
+  alert($("#postMessage").val());
+ 
+  $.ajax({
+       url: 'sendMessage.php', 
+       type: 'Post',
+       data: "message="+ $("#postMessage").val(),
+       success: function(result){
+            console.log("success");
+            console.log(result);
+       }
+    });
+
+
+});
+
+
 </script>
