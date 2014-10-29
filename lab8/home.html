@@ -31,5 +31,13 @@ $(document).ready(function(){
             $('#followers').html(result);
        }
     });
+    $.ajax({
+       url: 'updateFollowing.php', 
+       type: 'GET',
+       data: "username=Travis",
+       success: function(result){
+            $('#follow').html(result);
+       }
+    })
 });
 </script>
