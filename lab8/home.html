@@ -14,12 +14,18 @@
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script>
+
+function refreshView(){
+    return
+}
 $(document).ready(function(){
     $.ajax({
        url: 'updateFollowers.php', 
        type: 'GET',
        data: "username=Travis",
        success: function(result){
+            console.log("success");
+            console.log(result);
             refreshView();
        }
     });
