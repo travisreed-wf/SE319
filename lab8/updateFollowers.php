@@ -10,8 +10,13 @@
         $username = $_GET['username'];
         $query = "SELECT Followername FROM followers where username = '$username';";
         $result = mysqli_query($GLOBALS['con'], $query);
-        $result_array = (mysqli_fetch_array($result));
-        echo $result_array
+        $followers = array();
+        while($row = mysqli_fetch_array($result)) {
+            $followers[] = $row[0];
+            echo $row[0];
+            echo "<br>";
+        }
+        
     }
     else {
         echo "Missing data";

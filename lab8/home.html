@@ -4,12 +4,16 @@
 </head>
 <body>
 <div id="head">
-<p align="right">Username:</p>
+  <p align="right">Username:</p>
 </div>
-<div id="messages">Messages</div>
-<div id="follow">Follow</div>
-<div id="followers">Followers</div>
-<div id="post">Post</div>
+<h2>Messages</h2>
+<div id="messages"></div><br>
+<h2>Follow</h2>
+<div id="follow"></div><br>
+<h2>Followers</h2>
+<div id="followers"></div><br>
+<h2>Post</h2>
+<div id="post"></div><br>
 </body>
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
@@ -24,9 +28,7 @@ $(document).ready(function(){
        type: 'GET',
        data: "username=Travis",
        success: function(result){
-            console.log("success");
-            console.log(result);
-            refreshView();
+            $('#followers').html(result);
        }
     });
 });
