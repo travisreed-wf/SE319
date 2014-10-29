@@ -12,8 +12,6 @@ echo "<div id='head'><p align='right' id='user'>" . $username ."</p></div>";
 <title>Home</title>
 </head>
 <body>
-<h2>Messages</h2>
-<div id="messages"></div><br>
 <h2>Currently Following</h2>
 <div id="follow"></div><br>
 <input type="button" id="btnFollow" value="Follow Someone New">
@@ -26,10 +24,41 @@ echo "<div id='head'><p align='right' id='user'>" . $username ."</p></div>";
   <textarea placeholder="Post Your Message Here" maxlength="140" id="postMessage" rows="3" cols="50"></textarea>  
   <button id="postButton">Post </button>
 </div><br>
+<h2>Messages</h2>
+<div id="myDiv1">My Div</div>
+<div id="messages"></div><br>
+<br><br><br>
+<br><br><br>
+<br><br><br>
+<br><br><br>
+<br><br><br>
 </body>
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script>
+
+function getMessages() {
+  $.ajax({
+      async: false,
+      url: 'getInitialMessages.php', 
+      type: 'GET',
+      data: "",
+      success: function(result){
+        $('#myDiv1').html(result);
+      }
+  })
+  var xhr = new XMLHttpRequest();
+  xhr.onreadystatechange = function() {
+    if(xhr.readyState == 3) {
+      $("#messages").html(xhr.responseText);
+    }
+    else if (xhr.readyState == 4) {
+      $("#messages").html(xhr.responseText);
+    }
+  };
+  xhr.open("get","getMessages.php",true); 
+  xhr.send(null);
+}
 
 function refreshView(){
     return
@@ -48,6 +77,7 @@ function addUser(){
     })
 }
 $(document).ready(function(){
+    getMessages();
     $.ajax({
       url: 'updateFollowers.php', 
       type: 'GET',
