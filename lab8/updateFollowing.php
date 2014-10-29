@@ -22,7 +22,4 @@
         echo "Missing data";
     }
 
-
-
-
 ?>
