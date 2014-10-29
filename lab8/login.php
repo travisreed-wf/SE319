@@ -7,6 +7,13 @@ print "above if";
 if(check_database($username) == "false"){
 	print "in if";
 	register_database($username);	
+}else{
+	session_start();
+	$_SESSION["username"] = $username;
+	$url = 'http://' . $_SERVER['HTTP_HOST'];
+	$url .= rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
+	$url .= '/home.php';
+	header('Location: ' . $url); 
 }
 
 
