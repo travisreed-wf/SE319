@@ -81,16 +81,17 @@ $('#btnFollow').click(function(){
   });
 
 });
-$("#postButton").click(function(){
-  alert($("#postMessage").val());
- 
+$("#postButton").click(function(){ 
   $.ajax({
        url: 'sendMessage.php', 
-       type: 'Post',
+       type: 'GET',
        data: "message="+ $("#postMessage").val(),
        success: function(result){
             console.log("success");
             console.log(result);
+            $("#postMessage").val("");
+
+
        }
     });
 });
