@@ -8,7 +8,7 @@
 
     if (isset($_GET['username'])){
         $username = $_GET['username'];
-        $query = "SELECT Followername FROM followers where username = '$username';";
+        $query = "SELECT Username FROM followers where FollowerName = '$username';";
         $result = mysqli_query($GLOBALS['con'], $query);
         $followers = array();
         while($row = mysqli_fetch_array($result)) {

@@ -1,11 +1,17 @@
+<?php 
+
+session_start();
+$username = $_SESSION["username"];
+
+echo "<div id='head'><p align='right' id='user'>" . $username."</p></div>"
+
+?>
+
 <html>
 <head>
 <title>Home</title>
 </head>
 <body>
-<div id="head">
-<p align="right">Username:</p>
-</div>
 <div id="messages">Messages</div>
 <div id="follow">Follow</div>
 <div id="followers">Followers</div>
