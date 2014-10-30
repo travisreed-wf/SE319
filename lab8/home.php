@@ -40,7 +40,7 @@ echo "<div id='head'><p align='right' id='user'>" . $username ."</p></div>";
 function getMessages() {
   $.ajax({
       async: false,
-      url: 'getInitialMessages.php', 
+      url: 'getInitialMessages.php?username=travis', 
       type: 'GET',
       data: "",
       success: function(result){
@@ -56,7 +56,7 @@ function getMessages() {
       $("#messages").html(xhr.responseText);
     }
   };
-  xhr.open("get","getMessages.php",true); 
+  xhr.open("get","getMessages.php?username=travis",true); 
   xhr.send(null);
 }
 
@@ -77,7 +77,6 @@ function addUser(){
     })
 }
 $(document).ready(function(){
-    getMessages();
     $.ajax({
       url: 'updateFollowers.php', 
       type: 'GET',
@@ -94,6 +93,7 @@ $(document).ready(function(){
           $('#follow').html(result);
         }
     })
+    getMessages();
 });
 $('#btnFollow').click(function(){
   var table = "<table border=1>";

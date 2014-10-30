@@ -12,8 +12,7 @@ while (1) {
   sleep(10);
   $messages = array();
   $followers = array();
-  // $username = $_SESSION['username'];
-  $username = "travis";
+  $username = $_GET['username'];
   $query = "SELECT Username FROM followers where FollowerName = '$username';";
   $result = mysqli_query($GLOBALS['con'], $query);
   $followersList = array();

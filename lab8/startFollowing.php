@@ -6,11 +6,11 @@
       echo "Failed to connect to MySQL: " . mysqli_connect_error();
     }
 
-    
-    $username = $_SESSION['username'];
+    $username = $_GET['username'];
     $followerName = $_SESSION['username'];
     $query = "INSERT INTO followers (username, followername) VALUES ('$username', '$followerName');";
     $result = mysqli_query($GLOBALS['con'], $query);
+    echo $result;
 
 
 

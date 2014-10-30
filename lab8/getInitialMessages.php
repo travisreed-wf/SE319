@@ -5,8 +5,7 @@
   if (mysqli_connect_errno()) {
     echo "Failed to connect to MySQL: " . mysqli_connect_error();
   }
-  session_start();
-  $username = $_SESSION['username'];
+  $username = $_GET['username'];
   $query = "SELECT Username FROM followers where FollowerName = '$username';";
   $result = mysqli_query($GLOBALS['con'], $query);
   $followersList = array();
