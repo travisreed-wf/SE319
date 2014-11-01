@@ -38,9 +38,11 @@ echo "<div id='head'><p align='right' id='user'>" . $username ."</p></div>";
 <script>
 
 function getMessages() {
+  var url = 'getInitialMessages.php?username=' + $('#user').text();
+  var url2 = 'getMessages.php?username=' + $('#user').text();
   $.ajax({
       async: false,
-      url: 'getInitialMessages.php?username=travis', 
+      url: url,
       type: 'GET',
       data: "",
       success: function(result){
@@ -51,18 +53,41 @@ function getMessages() {
   xhr.onreadystatechange = function() {
     if(xhr.readyState == 3) {
       $("#messages").html(xhr.responseText);
+      console.log(xhr.responseText);
     }
     else if (xhr.readyState == 4) {
       $("#messages").html(xhr.responseText);
+      console.log(xhr.responseText);
+
     }
   };
-  xhr.open("get","getMessages.php?username=travis",true); 
+  xhr.open("get",url2,true); 
   xhr.send(null);
 }
 
-function refreshView(){
-    return
+function getFollowers(){
+  var url = 'updateFollowers.php?username=' + $('#user').text();
+  $.ajax({
+      url: url, 
+      type: 'GET',
+      data: "",
+      success: function(result){
+        $('#followers').html(result);
+      }
+    });
+  var xhr = new XMLHttpRequest();
+  xhr.onreadystatechange = function() {
+    if(xhr.readyState == 3) {
+      $('#followers').html(xhr.responseText);
+    }
+    else if (xhr.readyState == 4) {
+      $('#followers').html(xhr.responseText);
+    }
+  };
+  xhr.open("get",url,true); 
+  xhr.send(null);
 }
+
 function addUser(){
   var row = $(this).closest('tr');
   var user = $(this).parent().prev().prev().text();
@@ -78,14 +103,6 @@ function addUser(){
 }
 $(document).ready(function(){
     $.ajax({
-      url: 'updateFollowers.php', 
-      type: 'GET',
-      data: "",
-      success: function(result){
-        $('#followers').html(result);
-      }
-    });
-    $.ajax({
         url: 'updateFollowing.php', 
         type: 'GET',
         data: "",
@@ -94,6 +111,7 @@ $(document).ready(function(){
         }
     })
     getMessages();
+    getFollowers();
 });
 $('#btnFollow').click(function(){
   var table = "<table border=1>";
