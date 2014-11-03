@@ -66,7 +66,7 @@ function getMessages() {
 }
 
 function getFollowers(){
-  var url = 'updateFollowers.php?username=' + $('#user').text();
+  var url = 'getInitialFollowers.php?username=' + $('#user').text();
   $.ajax({
       url: url, 
       type: 'GET',
