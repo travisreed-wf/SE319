@@ -75,17 +75,6 @@ function getFollowers(){
         $('#followers').html(result);
       }
     });
-  var xhr = new XMLHttpRequest();
-  xhr.onreadystatechange = function() {
-    if(xhr.readyState == 3) {
-      $('#followers').html(xhr.responseText);
-    }
-    else if (xhr.readyState == 4) {
-      $('#followers').html(xhr.responseText);
-    }
-  };
-  xhr.open("get",url,true); 
-  xhr.send(null);
 }
 
 function addUser(){
@@ -112,6 +101,7 @@ $(document).ready(function(){
     })
     getMessages();
     getFollowers();
+    setInterval(getFollowers, 10000);
 });
 $('#btnFollow').click(function(){
   var table = "<table border=1>";

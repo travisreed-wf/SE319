@@ -14,10 +14,4 @@
         echo $row[0];
         echo "<br>";
     }
-        
-
-
-
-
 ?>
-<?php
