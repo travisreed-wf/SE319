@@ -35,19 +35,41 @@ PI              "<?"{Name}({Ws}[^?]*)?[?]+([^?>][^?]*[?]+)*">"
 
 %%
 {XMLDecl}      printf("xml declaration version = 1.0, encoding = UTF-8");
-"<"{Name}{Ws}?{Letter}+?"="?{AttValue}?">"   {
-                   char otherString[strlen(yytext)]; // note 6, not 5, there's one there for the null terminator
-                   strncpy(otherString, yytext, strlen(yytext)-1);
-                   otherString[strlen(yytext)] = '\0'; // place the null terminator
-                   printf("element name = %s", &otherString[1]);
+"<"{Name}   {
+                   printf("element name = %s", &yytext[1]);
                    yy_push_state(startElement);
                }
 
 
 <startElement>{
-{Ws}           printf("Here");
+{}           printf("Here");
+{Name}{Ws}?[=]{Ws}?["']    {
+                                /* this is an attribute, so let's use those rules */
+                                yy_push_state(attribute);
+                                yyless(0);  /* put back the entire lexeme */
+                           }
 }
 
+<attribute>{
+
+{Name}{Ws}?[=]    {
+                    printf(yytext);
+                    yyless(yyleng - 1); /* put back the equals sign */
+                    /* get the attribute name */
+                    /* TODO - strip the spaces from the name */
+                }
+[=]{Ws}?        ;   /* ignore */
+{AttValue}      {
+                    char* value = NULL;
+                    yy_pop_state();
+                    
+                    /* set the value of the attribute */
+                    value = malloc(yyleng + 1);
+                    memset(value, 0, yyleng + 1);
+                    memcpy(value, yytext, yyleng);
+                    printf(value);
+                }
+}
 
 
 %%
