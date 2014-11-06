@@ -2,6 +2,8 @@
 %{
 #include <stdio.h>
 #include <string.h>
+int unclosedElements = 0;
+
 %}
 
 %option stack yylineno
@@ -36,7 +38,8 @@ PI              "<?"{Name}({Ws}[^?]*)?[?]+([^?>][^?]*[?]+)*">"
 %%
 {XMLDecl}      printf("xml declaration version = 1.0, encoding = UTF-8");
 "<"{Name}      {
-                   printf("element name = %s", &yytext[1]);
+                   printf("element name = %s ", &yytext[1]);
+                   unclosedElements += 1;
                    yy_push_state(startElement);
                }
 
@@ -50,11 +53,13 @@ PI              "<?"{Name}({Ws}[^?]*)?[?]+([^?>][^?]*[?]+)*">"
 "/>"            {
                     yy_pop_state();
                     printf("empty");
+                    unclosedElements -= 1;
                 }
 
 [>]             {
                     yy_pop_state();
                     yy_push_state(endElement);
+
                 }
 [ \t\n]         ; /* ignore whitespace */
 }
@@ -62,7 +67,7 @@ PI              "<?"{Name}({Ws}[^?]*)?[?]+([^?>][^?]*[?]+)*">"
 <attribute>{
 
 {Name}{Ws}?[=]    {
-                    printf(yytext);
+                    printf(" %s", yytext);
                     yyless(yyleng - 1); /* put back the equals sign */
                     /* get the attribute name */
                 }
@@ -75,12 +80,27 @@ PI              "<?"{Name}({Ws}[^?]*)?[?]+([^?>][^?]*[?]+)*">"
                     value = malloc(yyleng + 1);
                     memset(value, 0, yyleng + 1);
                     memcpy(value, yytext, yyleng);
-                    printf(value);
+                    printf(" %s", value);
                 }
 }
+<endElement>{
+"</"{Name}">"   {
+                    yy_pop_state();
+                    unclosedElements -= 1;
+                }
 
 
+{CharData}      {
+                    printf(" text=%s\n", yytext);
+                }
+}
 %%
 int yywrap(){ return 1;}
-int main(){ yylex();
+int main(){ 
+    yylex();
+    if (unclosedElements != 0){
+        printf("\nInvalid xml, an element is not closed\n");
+        return 0;
+    }
+    printf("\n");
 }
