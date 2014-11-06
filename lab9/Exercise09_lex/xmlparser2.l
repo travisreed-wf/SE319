@@ -35,19 +35,28 @@ PI              "<?"{Name}({Ws}[^?]*)?[?]+([^?>][^?]*[?]+)*">"
 
 %%
 {XMLDecl}      printf("xml declaration version = 1.0, encoding = UTF-8");
-"<"{Name}   {
+"<"{Name}      {
                    printf("element name = %s", &yytext[1]);
                    yy_push_state(startElement);
                }
 
 
 <startElement>{
-{}           printf("Here");
 {Name}{Ws}?[=]{Ws}?["']    {
                                 /* this is an attribute, so let's use those rules */
                                 yy_push_state(attribute);
                                 yyless(0);  /* put back the entire lexeme */
                            }
+"/>"            {
+                    yy_pop_state();
+                    printf("empty");
+                }
+
+[>]             {
+                    yy_pop_state();
+                    yy_push_state(endElement);
+                }
+[ \t\n]         ; /* ignore whitespace */
 }
 
 <attribute>{
@@ -56,7 +65,6 @@ PI              "<?"{Name}({Ws}[^?]*)?[?]+([^?>][^?]*[?]+)*">"
                     printf(yytext);
                     yyless(yyleng - 1); /* put back the equals sign */
                     /* get the attribute name */
-                    /* TODO - strip the spaces from the name */
                 }
 [=]{Ws}?        ;   /* ignore */
 {AttValue}      {
