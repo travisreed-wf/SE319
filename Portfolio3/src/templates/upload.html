@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+{% block header_css %}
+<head>
+    <title>Upload a File</title>
+    {{ super() }}
+</head>
+{% endblock %}
+{% block body %}
+<div class="row">
+    <div class="col-md-10 col-md-offset-2" style="width:800px;">
+        <input type="text" class="form-control" placeholder="title">
+        <input type="textarea" class="form-control" placeholder="Optional Description">
+        <span class="btn btn-default btn-file">
+            Upload File<input type="file">
+        </span>
+
+    </div>
+</div>
+{% endblock %}
+{% block js_bottom %}
+{{ super() }}
+<script>   
+</script>
+{% endblock %}
