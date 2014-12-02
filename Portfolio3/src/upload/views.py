@@ -9,7 +9,7 @@ import re
 import json
 
 
-class HomeScreenView(MethodView):
+class UploadView(MethodView):
 
     def get(self):
-        return render_template('home.html')
+        return render_template('upload.html')

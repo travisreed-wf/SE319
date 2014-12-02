@@ -9,6 +9,7 @@ from home import urls as home_urls
 import models
 from settingslocal import DEBUG_MODE
 from settingslocal import RELOADER_BOOL
+from upload import urls as upload_urls
 
 app = Flask(__name__)
 app.debug = DEBUG_MODE
@@ -21,6 +22,7 @@ def sandbox():
     return redirect(url_for('home'))
 
 home_urls.setup_urls(app)
+upload_urls.setup_urls(app)
 models.db.init_app(app)
 
 # Initialize sqlite db if necessary (for dev)
