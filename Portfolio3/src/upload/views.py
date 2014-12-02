@@ -16,9 +16,12 @@ import settingslocal
 
 
 def allowed_file(filename):
-        return '.' in filename and \
-            filename.rsplit('.', 1)[1] in settingslocal.ALLOWED_EXTENSIONS
+    return '.' in filename and \
+        filename.rsplit('.', 1)[1] in settingslocal.ALLOWED_EXTENSIONS
 
+def allowed_image(filename):
+    return '.' in filename and \
+        filename.rsplit('.', 1)[1] in settingslocal.ALLOWED_IMAGE_EXTENSIONS
 
 class UploadView(MethodView):
 
@@ -29,15 +32,21 @@ class UploadView(MethodView):
         name = flask.request.form.get('title')
         desc = flask.request.form.get("description")
         f = flask.request.files.get('file_path')
+        thumbnail = flask.request.files.get('thumbnail')
         if f and allowed_file(f.filename):
-            item = models.Item(name, f.filename)
+            if thumbnail and allowed_image(thumbnail.filename):
+                db_thumbnail = models.Thumbnail(thumbnail.filename)
+                models.db.session.add(db_thumbnail)
+            item = models.Item(name, f.filename, db_thumbnail.id)
             item.description = desc
             models.db.session.add(item)
             models.db.session.commit()
-            filename = str(item.id) + "." + item.extension if item.extension else str(item.id)
-            f.save(os.path.join("src/static/uploads", filename))
+            f.save(os.path.join("src/static/uploads", item.get_filename()))
+            thumbnail.save(os.path.join("src/static/uploads/thumbnails",
+                           db_thumbnail.get_filename()))
+
             return redirect(url_for('uploaded_file',
-                                    filename=filename))
+                                    filename=item.get_filename()))
         return "Failed"
 
 
