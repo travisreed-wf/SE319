@@ -13,3 +13,10 @@ class UploadView(MethodView):
 
     def get(self):
         return render_template('upload.html')
+
+    def post(self):
+        name = flask.request.form.get('title')
+        desc = flask.request.form.get("description")
+        f = flask.request.files.get('file_path')
+        print name, desc, f
+        return "Successful"
