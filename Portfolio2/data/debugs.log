@@ -1,0 +1,21 @@
+2014-11-12 18:07:15,635|   INFO|            views.py (0021)|	Testing
+2014-11-12 18:07:15,636|  ERROR|            views.py (0022)|	Testing Error
+2014-11-12 18:10:41,138|   INFO|	Testing|(21)
+2014-11-12 18:10:41,138|  ERROR|	Testing Error|(22)
+2014-11-12 18:11:37,672|   INFO|	Testing|(21)
+2014-11-12 18:11:37,672|  ERROR|	Testing Error|(22)
+2014-11-12 18:12:52,337|   INFO|	Testing|(21)
+2014-11-12 18:12:52,338|  ERROR|	Testing Error|(22)
+2014-11-12 18:13:05,451|   INFO|	Testing|(21)
+2014-11-12 18:13:05,451|  ERROR|	Testing Error|(22)
+2014-11-12 18:14:37,453|   INFO|	Testing|(21)
+2014-11-12 18:14:37,453|  ERROR|	Testing Error|(22)
+2014-11-12 18:15:46,521|   INFO|	Testing|(21)
+2014-11-12 18:15:46,521|  ERROR|	Testing Error|(22)
+2014-11-12 18:16:20,587|   INFO|	Testing|(21)
+2014-11-12 18:16:20,587|  ERROR|	Testing Error|(22)
+2014-11-12 18:20:19,147|  ERROR|            views.py (0021)|	Testing Error
+2014-11-12 18:20:20,486|  ERROR|            views.py (0021)|	Testing Error
+2014-11-12 19:10:44,986|  ERROR|            views.py (0021)|	Testing Error
+2014-11-12 19:11:08,478|   INFO|            views.py (0033)|	User: tjreed@iastate.edu has logged in
+2014-11-30 19:31:28,493|   INFO|            views.py (0032)|	User: tjreed@iastate.edu has logged in
