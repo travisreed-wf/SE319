@@ -30,17 +30,18 @@ class UploadView(MethodView):
         desc = flask.request.form.get("description")
         f = flask.request.files.get('file_path')
         if f and allowed_file(f.filename):
-            item = models.Item(name)
+            item = models.Item(name, f.filename)
             item.description = desc
             models.db.session.add(item)
             models.db.session.commit()
-            f.save(os.path.join("src/static/uploads", str(item.id)))
+            filename = str(item.id) + "." + item.extension if item.extension else str(item.id)
+            f.save(os.path.join("src/static/uploads", filename))
             return redirect(url_for('uploaded_file',
-                                    item_id=item.id))
+                                    filename=filename))
         return "Failed"
 
 
 class UploadedFileView(MethodView):
 
-    def get(self, item_id):
-        return flask.send_file("static/uploads/" + str(item_id))
+    def get(self, filename):
+        return flask.send_file("static/uploads/" + filename)

@@ -8,9 +8,11 @@ class Item(db.Model):
     title = db.Column(db.String(255))
     thumbnail_id = db.Column(db.Integer, db.ForeignKey('thumbnail.id'))
     description = db.Column(db.String(1024))
+    extension = db.Column(db.String(300))
 
-    def __init__(self, title):
+    def __init__(self, title, filename):
         self.title = title
+        self.extension = filename.split('.')[-1]
 
 
 class Thumbnail(db.Model):
