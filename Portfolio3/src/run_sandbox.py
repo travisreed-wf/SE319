@@ -5,6 +5,7 @@ from flask import redirect
 from flask import url_for
 from flask_debugtoolbar import DebugToolbarExtension
 
+from browse import urls as browse_urls
 from home import urls as home_urls
 import models
 from settingslocal import DEBUG_MODE
@@ -21,6 +22,7 @@ toolbar = DebugToolbarExtension(app)
 def sandbox():
     return redirect(url_for('home'))
 
+browse_urls.setup_urls(app)
 home_urls.setup_urls(app)
 upload_urls.setup_urls(app)
 models.db.init_app(app)
