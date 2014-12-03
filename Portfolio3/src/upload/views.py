@@ -19,9 +19,11 @@ def allowed_file(filename):
     return '.' in filename and \
         filename.rsplit('.', 1)[1] in settingslocal.ALLOWED_EXTENSIONS
 
+
 def allowed_image(filename):
     return '.' in filename and \
         filename.rsplit('.', 1)[1] in settingslocal.ALLOWED_IMAGE_EXTENSIONS
+
 
 class UploadView(MethodView):
 
