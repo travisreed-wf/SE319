@@ -12,7 +12,11 @@ import json
 class BrowseView(MethodView):
 
     def get(self):
-        return render_template('browse.html')
+        l = []
+        items=models.Item.query.all()
+        for item in items:
+            l.append((item, models.Thumbnail.query.filter_by(id=item.thumbnail_id).first()))
+        return render_template('browse.html',items_and_thumbs=l)
 
     def post(self):
         name = flask.request.form.get('title')
@@ -20,3 +24,4 @@ class BrowseView(MethodView):
         f = flask.request.files.get('file_path')
         print name, desc, f
         return "Successful"
+

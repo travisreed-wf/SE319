@@ -47,15 +47,20 @@
                 addItemToTable();
             });
 
+
+            {% for (item, thumbnail) in items_and_thumbnails %}
+                console.log("{{item.title}}");
+                addItemToTable("{{item.title}}","{{item.description}}","{{thumbnail.id}}","{{thumbnail.extension}}");
+            {% endfor %}
+
         });
 
-        function addItemToTable(item){
-            var thumbnail = "/static/images/smishare.ico"
-            var title = item.title;
-            var description = item.description;
-            if(item.thumbnail != null){
-                thumbnail = item.thumbnail;
-            }
+
+
+        function addItemToTable(title,description,thumbnailId,thumbnailExt){
+            console.log(item.title);
+            // console.log(item);
+            var thumbnail = "/static/uploads/thumbnails/" + thumbnailId + "." + thumbnailExt
 
             var table = document.getElementById("shareTable");
             var row = table.insertRow(1);
