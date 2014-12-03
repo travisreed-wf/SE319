@@ -48,19 +48,21 @@
             });
 
 
-            {% for (item, thumbnail) in items_and_thumbnails %}
+            {% for (item, thumbnail) in items_and_thumbs %}
                 console.log("{{item.title}}");
-                addItemToTable("{{item.title}}","{{item.description}}","{{thumbnail.id}}","{{thumbnail.extension}}");
+                addItemToTable("{{item.title}}","{{item.description}}","{{thumbnail.id}}","{{thumbnail.extension}}", "{{item.id}}", "{{item.extension}}");
             {% endfor %}
 
         });
 
 
 
-        function addItemToTable(title,description,thumbnailId,thumbnailExt){
-            console.log(item.title);
+        function addItemToTable(title, description, thumbnailId, thumbnailExt, itemID, itemExtension){
             // console.log(item);
-            var thumbnail = "/static/uploads/thumbnails/" + thumbnailId + "." + thumbnailExt
+            console.log(thumbnailId)
+            var image_path = "/static/uploads/" + itemID + "." + itemExtension;
+            var thumbnail = "/static/uploads/thumbnails/" + thumbnailId + "." + thumbnailExt;
+            console.log(thumbnail);
 
             var table = document.getElementById("shareTable");
             var row = table.insertRow(1);
@@ -72,6 +74,12 @@
 
             var img = document.createElement('img');
             img.src = thumbnail;
+            img.width = "60"
+            img.height = "40"
+            img.style.cursor = "pointer"
+            img.onclick = function() {
+                window.location.href = image_path;
+            };
             cell2.appendChild(img);
 
             cell3.innerHTML = description;

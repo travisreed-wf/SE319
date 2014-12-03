@@ -25,6 +25,15 @@ def allowed_image(filename):
         filename.rsplit('.', 1)[1] in settingslocal.ALLOWED_IMAGE_EXTENSIONS
 
 
+def get_thumbnail(extension):
+    if extension == "pdf":
+        return models.Thumbnail.query.filter_by(id=1).first()
+    elif extesnion == "txt":
+        return models.Thumbnail.query.filter_by(id=2).first()
+    else:
+        return models.Thumbnail.query.filter_by(id=3).first()
+
+
 class UploadView(MethodView):
 
     def get(self):
@@ -39,6 +48,9 @@ class UploadView(MethodView):
             if thumbnail and allowed_image(thumbnail.filename):
                 db_thumbnail = models.Thumbnail(thumbnail.filename)
                 models.db.session.add(db_thumbnail)
+                models.db.session.commit()
+            else:
+                db_thumbnail = get_thumbnail(f.filename.split('.')[-1])
             item = models.Item(name, f.filename, db_thumbnail.id)
             item.description = desc
             models.db.session.add(item)
