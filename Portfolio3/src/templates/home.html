@@ -16,27 +16,27 @@
             <div class="form-group">
               <input size="100" type="text" class="form-control" placeholder="Search">
             </div>
-            <button type="submit" class="btn btn-default">Submit</button>
+            <button type="submit" id="sbmt" class="btn btn-default">Submit</button>
             <div align="center">
                 <div alige="center" class="row">
                     <div class="col-sm-2">
                         <div class="input-group">
-                            <input type="radio" name="searchType" value="txt"> Txt
+                            <input id="TXT" type="radio" name="searchType" value="txt"> Txt
                         </div><!-- /input-group -->
                     </div><!-- /.col-lg-2 -->
                     <div class="col-sm-2">
                         <div class="input-group">
-                            <input type="radio" name="searchType" value="music"> Music
+                            <input id="PIC" type="radio" name="searchType" value="picture"> Music
                         </div><!-- /input-group -->
                     </div><!-- /.col-lg-2 -->
                     <div class="col-sm-2">
                         <div class="input-group">
-                            <input type="radio" name="searchType" value="video"> Video
+                            <input id="VIDEO" type="radio" name="searchType" value="video"> Video
                         </div><!-- /input-group -->
                     </div><!-- /.col-lg-2 -->
                     <div class="col-sm-2">
                         <div class="input-group">
-                            <input type="radio" checked="checked" name="searchType" value="all"> All
+                            <input id="ALL" type="radio" checked="checked" name="searchType" value="all"> All
                         </div><!-- /input-group -->
                     </div><!-- /.col-lg-2 -->
                 </div><!-- /.row -->
@@ -47,7 +47,7 @@
         <div class="row">
             <div class="panel panel-default">
               <!-- Default panel contents -->
-                <div class="panel-heading">Panel heading</div>
+                <div class="panel-heading">Smis</div>
 
                   <!-- Table -->
                 <table id="topTable"class="table" width="50%">
@@ -63,7 +63,52 @@
         $(document).ready(function(){
             
             $("#searchbar").hide();
+			
+			$("#sbmt").click(function(){
+				{% for (item, thumbnail) in items_and_thumbs %}
+					if($("#TXT").is(":checked") && ("{{item.extension}}" == "txt" || "{{item.extension}}" == "pdf")){
+						addItemToTable("{{item.title}}","{{item.description}}","{{thumbnail.id}}","{{thumbnail.extension}}", "{{item.id}}", "{{item.extension}}");
+					}
+					else if($("#PIC").is(":checked") && ("{{item.extension}}" == "png" || "{{item.extension}}" == "jpeg" || "{{item.extension}}" == "jpg")){
+						addItemToTable("{{item.title}}","{{item.description}}","{{thumbnail.id}}","{{thumbnail.extension}}", "{{item.id}}", "{{item.extension}}");
+					}
+					else if($("#VIDEO").is(":checked") && "{{item.extension}}" == "png"){
+						addItemToTable("{{item.title}}","{{item.description}}","{{thumbnail.id}}","{{thumbnail.extension}}", "{{item.id}}", "{{item.extension}}");
+					}
+					else if($("#ALL").is(":checked")){
+						addItemToTable("{{item.title}}","{{item.description}}","{{thumbnail.id}}","{{thumbnail.extension}}", "{{item.id}}", "{{item.extension}}");
+					}
+				{% endfor %}
+			});
 
+			function addItemToTable(title, description, thumbnailId, thumbnailExt, itemID, itemExtension){
+				// console.log(item);
+				console.log(thumbnailId)
+				var image_path = "/static/uploads/" + itemID + "." + itemExtension;
+				var thumbnail = "/static/uploads/thumbnails/" + thumbnailId + "." + thumbnailExt;
+				console.log(thumbnail);
+
+				var table = document.getElementById("topTable");
+				var row = table.insertRow(1);
+				var cell1 = row.insertCell(0);
+				var cell2 = row.insertCell(1);
+				var cell3 = row.insertCell(2);
+				cell1.innerHTML = title;
+				cell2.innerHTML = "";
+
+				var img = document.createElement('img');
+				img.src = thumbnail;
+				img.width = "60"
+				img.height = "40"
+				img.style.cursor = "pointer"
+				img.onclick = function() {
+					window.location.href = image_path;
+				};
+				cell2.appendChild(img);
+
+				cell3.innerHTML = description;
+			}
+			
         });
     </script>
 {% endblock %}

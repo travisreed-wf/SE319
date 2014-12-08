@@ -28,7 +28,7 @@ def allowed_image(filename):
 def get_thumbnail(extension):
     if extension == "pdf":
         return models.Thumbnail.query.filter_by(id=1).first()
-    elif extesnion == "txt":
+    elif extension == "txt":
         return models.Thumbnail.query.filter_by(id=2).first()
     else:
         return models.Thumbnail.query.filter_by(id=3).first()

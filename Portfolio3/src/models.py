@@ -14,7 +14,7 @@ class Item(db.Model):
         self.title = title
         self.thumbnail_id = thumbnail_id
         if "." in filename:
-            self.extension = filename.split('.')[-1]
+            self.extension = filename.split('.')[1]
 
     def get_filename(self):
         if self.extension:
