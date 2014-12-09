@@ -30,6 +30,8 @@ def get_thumbnail(extension):
         return models.Thumbnail.query.filter_by(id=1).first()
     elif extension == "txt":
         return models.Thumbnail.query.filter_by(id=2).first()
+    elif extension == "mp3":
+        return models.Thumbnail.query.filter_by(id=4).first()
     else:
         return models.Thumbnail.query.filter_by(id=3).first()
 
@@ -59,8 +61,7 @@ class UploadView(MethodView):
             thumbnail.save(os.path.join("src/static/uploads/thumbnails",
                            db_thumbnail.get_filename()))
 
-            return redirect(url_for('uploaded_file',
-                                    filename=item.get_filename()))
+            return redirect(url_for('upload'))
         return "Failed"
 
 
