@@ -14,7 +14,7 @@
             <textarea name="description" class="form-control" placeholder="Optional Description"></textarea>
             <br>
             <span class="btn btn-default btn-file">
-                Upload File<input type="file" name="file_path">
+                Upload File<input id="file" type="file" name="file_path">
             </span>
             <span class="btn btn-default btn-file">
                 Optional Thumbnail<input type="file" name="thumbnail">
@@ -26,6 +26,22 @@
 {% endblock %}
 {% block js_bottom %}
 {{ super() }}
-<script>   
+<script src="/static/jquery-2.1.1.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+    $('#file').click(function(e){
+        y = confirm("In order to upload files you must accept our EULA:\n" +
+                    "This includes, but is not limited to, an agreement not to " +
+                    "upload any material that you do not have the right to use " +
+                    "or distribute. You also agree not to upload plans or schematics " +
+                    "that could be used against the united states in wartime. Finally, " +
+                    "you agree that your soul shall be mine for all of eternity --Rosie"
+                )
+        if (!y){
+            e.preventDefault();
+        }
+
+    });
+})
 </script>
 {% endblock %}
