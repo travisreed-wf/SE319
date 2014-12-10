@@ -12,36 +12,34 @@
           <h1>**SmiShare**</h1>
           <p>...</p>
         </div>
-        <form class="navbar-form navbar-left" role="search">
-            <div class="form-group">
-              <input size="100" type="text" class="form-control" placeholder="Search">
-            </div>
-            <button type="submit" id="sbmt" class="btn btn-default">Submit</button>
-            <div align="center">
-                <div alige="center" class="row">
-                    <div class="col-sm-2">
-                        <div class="input-group">
-                            <input id="TXT" type="radio" name="searchType" value="txt"> Txt
-                        </div><!-- /input-group -->
-                    </div><!-- /.col-lg-2 -->
-                    <div class="col-sm-2">
-                        <div class="input-group">
-                            <input id="PIC" type="radio" name="searchType" value="picture"> Music
-                        </div><!-- /input-group -->
-                    </div><!-- /.col-lg-2 -->
-                    <div class="col-sm-2">
-                        <div class="input-group">
-                            <input id="VIDEO" type="radio" name="searchType" value="video"> Video
-                        </div><!-- /input-group -->
-                    </div><!-- /.col-lg-2 -->
-                    <div class="col-sm-2">
-                        <div class="input-group">
-                            <input id="ALL" type="radio" checked="checked" name="searchType" value="all"> All
-                        </div><!-- /input-group -->
-                    </div><!-- /.col-lg-2 -->
-                </div><!-- /.row -->
-            </div>
-        </form>
+        <div class="form-group">
+          <input size="100" type="text" class="form-control" placeholder="Search">
+        </div>
+<!--         <button id="sbmt" class="btn btn-default">Submit</button>
+ -->        <div align="center">
+            <div alige="center" class="row">
+                <div class="col-sm-2">
+                    <div class="input-group">
+                        <input id="TXT" type="radio" name="searchType" value="txt"> Txt
+                    </div><!-- /input-group -->
+                </div><!-- /.col-lg-2 -->
+                <div class="col-sm-2">
+                    <div class="input-group">
+                        <input id="PIC" type="radio" name="searchType" value="picture"> Music
+                    </div><!-- /input-group -->
+                </div><!-- /.col-lg-2 -->
+                <div class="col-sm-2">
+                    <div class="input-group">
+                        <input id="VIDEO" type="radio" name="searchType" value="video"> Video
+                    </div><!-- /input-group -->
+                </div><!-- /.col-lg-2 -->
+                <div class="col-sm-2">
+                    <div class="input-group">
+                        <input id="ALL" type="radio" checked="checked" name="searchType" value="all"> All
+                    </div><!-- /input-group -->
+                </div><!-- /.col-lg-2 -->
+            </div><!-- /.row -->
+        </div>
     </div>
     <div align="center" style="padding-top: 150px;">
         <div class="row">
@@ -87,12 +85,15 @@
             cell3.innerHTML = description;
         }
         $(document).ready(function(){
-            
+            {% for (item, thumbnail) in items_and_thumbs %}
+                addItemToTable("{{item.title}}","{{item.description}}","{{thumbnail.id}}","{{thumbnail.extension}}", "{{item.id}}", "{{item.extension}}");
+            {% endfor %}
+
             $("#searchbar").hide();
 			
-			$("#sbmt").click(function(){
+			$("input").click(function(){
+                $('#topTable').empty();
 				{% for (item, thumbnail) in items_and_thumbs %}
-                    console.log("{{item.title}}")
 					if($("#TXT").is(":checked") && ("{{item.extension}}" == "txt" || "{{item.extension}}" == "pdf")){
 						addItemToTable("{{item.title}}","{{item.description}}","{{thumbnail.id}}","{{thumbnail.extension}}", "{{item.id}}", "{{item.extension}}");
 					}
@@ -105,11 +106,8 @@
 					else if($("#ALL").is(":checked")){
 						addItemToTable("{{item.title}}","{{item.description}}","{{thumbnail.id}}","{{thumbnail.extension}}", "{{item.id}}", "{{item.extension}}");
 					}
-                    console.log(2)
 				{% endfor %}
-                console.log(3)
 			});
-            console.log(4)
         });
     </script>
 {% endblock %}
