@@ -13,7 +13,7 @@
           <p>...</p>
         </div>
         <div class="form-group">
-          <input size="100" type="text" class="form-control" placeholder="Search">
+          <input size="100" id="search" type="text" class="form-control" placeholder="Search">
         </div>
 <!--         <button id="sbmt" class="btn btn-default">Submit</button>
  -->        <div align="center">
@@ -25,12 +25,12 @@
                 </div><!-- /.col-lg-2 -->
                 <div class="col-sm-2">
                     <div class="input-group">
-                        <input id="PIC" type="radio" name="searchType" value="picture"> Music
+                        <input id="PIC" type="radio" name="searchType" value="picture"> Pictures
                     </div><!-- /input-group -->
                 </div><!-- /.col-lg-2 -->
                 <div class="col-sm-2">
                     <div class="input-group">
-                        <input id="VIDEO" type="radio" name="searchType" value="video"> Video
+                        <input id="MUSIC" type="radio" name="searchType" value="music"> Music
                     </div><!-- /input-group -->
                 </div><!-- /.col-lg-2 -->
                 <div class="col-sm-2">
@@ -60,10 +60,8 @@
 <script type="text/javascript">
         function addItemToTable(title, description, thumbnailId, thumbnailExt, itemID, itemExtension){
             // console.log(item);
-            console.log(thumbnailId)
             var image_path = "/static/uploads/" + itemID + "." + itemExtension;
             var thumbnail = "/static/uploads/thumbnails/" + thumbnailId + "." + thumbnailExt;
-            console.log(thumbnail);
 
             var table = document.getElementById("topTable");
             var row = table.insertRow(-1);
@@ -72,7 +70,6 @@
             var cell3 = row.insertCell(2);
             cell1.innerHTML = title;
             cell2.innerHTML = "";
-            console.log("1")
 
             var img = document.createElement('img');
             img.src = thumbnail;
@@ -90,24 +87,46 @@
             {% endfor %}
 
             $("#searchbar").hide();
-			
-			$("input").click(function(){
-                $('#topTable').empty();
-				{% for (item, thumbnail) in items_and_thumbs %}
-					if($("#TXT").is(":checked") && ("{{item.extension}}" == "txt" || "{{item.extension}}" == "pdf")){
-						addItemToTable("{{item.title}}","{{item.description}}","{{thumbnail.id}}","{{thumbnail.extension}}", "{{item.id}}", "{{item.extension}}");
-					}
-					else if($("#PIC").is(":checked") && ("{{item.extension}}" == "png" || "{{item.extension}}" == "jpeg" || "{{item.extension}}" == "jpg")){
-						addItemToTable("{{item.title}}","{{item.description}}","{{thumbnail.id}}","{{thumbnail.extension}}", "{{item.id}}", "{{item.extension}}");
-					}
-					else if($("#VIDEO").is(":checked") && "{{item.extension}}" == "png"){
-						addItemToTable("{{item.title}}","{{item.description}}","{{thumbnail.id}}","{{thumbnail.extension}}", "{{item.id}}", "{{item.extension}}");
-					}
-					else if($("#ALL").is(":checked")){
-						addItemToTable("{{item.title}}","{{item.description}}","{{thumbnail.id}}","{{thumbnail.extension}}", "{{item.id}}", "{{item.extension}}");
-					}
-				{% endfor %}
-			});
+            $("#search").change()
+            $("#TXT").change(function(){
+                if ($(this).is(":checked")){
+                    $('#topTable').empty();
+                    {% for (item, thumbnail) in items_and_thumbs %}
+                        if ("{{item.extension}}" == "txt" || "{{item.extension}}" == "pdf"){
+                           addItemToTable("{{item.title}}","{{item.description}}","{{thumbnail.id}}","{{thumbnail.extension}}", "{{item.id}}", "{{item.extension}}");
+                        }
+                    {% endfor %}
+                }
+            });
+            $("#PIC").change(function(){
+                if ($(this).is(":checked")){
+                    $('#topTable').empty();
+                    {% for (item, thumbnail) in items_and_thumbs %}
+                        if ("{{item.extension}}" == "jpg" || "{{item.extension}}" == "png" || "{{item.extension}}" == "jpeg"){
+                           addItemToTable("{{item.title}}","{{item.description}}","{{thumbnail.id}}","{{thumbnail.extension}}", "{{item.id}}", "{{item.extension}}");
+                        }
+                    {% endfor %}
+                }
+            });
+            $("#MUSIC").change(function(){
+                if ($(this).is(":checked")){
+                    $('#topTable').empty();
+                    {% for (item, thumbnail) in items_and_thumbs %}
+                        if ("{{item.extension}}" == "mp3"){
+                           addItemToTable("{{item.title}}","{{item.description}}","{{thumbnail.id}}","{{thumbnail.extension}}", "{{item.id}}", "{{item.extension}}");
+                        }
+                    {% endfor %}
+                }
+            });
+            $("#ALL").change(function(){
+                if ($(this).is(":checked")){
+                    $('#topTable').empty();
+                    {% for (item, thumbnail) in items_and_thumbs %}
+                        addItemToTable("{{item.title}}","{{item.description}}","{{thumbnail.id}}","{{thumbnail.extension}}", "{{item.id}}", "{{item.extension}}");
+                    {% endfor %}
+                }
+            });
+
         });
     </script>
 {% endblock %}
