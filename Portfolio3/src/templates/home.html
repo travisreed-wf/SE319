@@ -87,7 +87,24 @@
             {% endfor %}
 
             $("#searchbar").hide();
-            $("#search").change()
+            $("#search").change(function(){
+                var searchText = $("#search").val();
+                $('#topTable > tbody  > tr').each(function() {
+                    var found = false;
+                    for(var i=0; i<$(this).children().length; i++){
+                        var txt = $(this).children()[i].innerHTML;
+                        if (txt.indexOf(searchText) > -1){
+                            found = true;
+                        }
+                    }
+                    if (!found){
+                        $(this).hide();
+                    }
+                    else{
+                        $(this).show();
+                    }
+                });
+            });
             $("#TXT").change(function(){
                 if ($(this).is(":checked")){
                     $('#topTable').empty();
